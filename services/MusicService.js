@@ -24,7 +24,6 @@ class MusicService {
       poster: poster,
       audio: audio,
     });
-    console.log(updatedMusic);
     return updatedMusic;
   }
   async delete(id) {
