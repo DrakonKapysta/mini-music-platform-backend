@@ -39,13 +39,16 @@ class MusicController {
     }
   }
   async update(req, res) {
+    if (!req.files) {
+      return res.status(500).json({ message: "File not uploaded." });
+    }
     try {
-      const { poster, audio } = req.files;
-      console.log(audio.name);
+      const files = await FileService.saveFiles(req.files);
+      const { image: poster, audio } = files;
       const updated = await MusicService.update(
         req.body,
-        poster.name,
-        audio.name
+        poster.fileName,
+        audio.fileName
       );
       res.json({ message: "Updated successfuly", previousMusic: updated });
     } catch (e) {
